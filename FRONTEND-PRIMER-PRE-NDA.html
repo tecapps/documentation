@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Affirm - Frontend Lead Primer</title>
+    <style>
+      :root {
+        /* Catppuccin Mocha palette */
+        --ctp-rosewater: #f5e0dc;
+        --ctp-flamingo: #f2cdcd;
+        --ctp-pink: #f5c2e7;
+        --ctp-mauve: #cba6f7;
+        --ctp-red: #f38ba8;
+        --ctp-maroon: #eba0ac;
+        --ctp-peach: #fab387;
+        --ctp-yellow: #f9e2af;
+        --ctp-green: #a6e3a1;
+        --ctp-teal: #94e2d5;
+        --ctp-sky: #89dceb;
+        --ctp-sapphire: #74c7ec;
+        --ctp-blue: #89b4fa;
+        --ctp-lavender: #b4befe;
+        --ctp-text: #cdd6f4;
+        --ctp-subtext1: #bac2de;
+        --ctp-subtext0: #a6adc8;
+        --ctp-overlay2: #9399b2;
+        --ctp-overlay1: #7f849c;
+        --ctp-overlay0: #6c7086;
+        --ctp-surface2: #585b70;
+        --ctp-surface1: #45475a;
+        --ctp-surface0: #313244;
+        --ctp-base: #1e1e2e;
+        --ctp-mantle: #181825;
+        --ctp-crust: #11111b;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family:
+          "Segoe UI",
+          system-ui,
+          -apple-system,
+          sans-serif;
+        background: var(--ctp-base);
+        color: var(--ctp-text);
+        line-height: 1.7;
+        padding: 0;
+      }
+
+      .hero {
+        background: linear-gradient(
+          135deg,
+          var(--ctp-crust) 0%,
+          var(--ctp-mantle) 50%,
+          var(--ctp-base) 100%
+        );
+        border-bottom: 1px solid var(--ctp-surface0);
+        padding: 3rem 2rem;
+        text-align: center;
+      }
+
+      .hero h1 {
+        font-size: 2.4rem;
+        font-weight: 700;
+        color: var(--ctp-mauve);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+      }
+
+      .hero .subtitle {
+        font-size: 1.15rem;
+        color: var(--ctp-subtext0);
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .hero .badge-row {
+        margin-top: 1.2rem;
+        display: flex;
+        gap: 0.6rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      .badge-mauve {
+        background: var(--ctp-mauve);
+        color: var(--ctp-crust);
+      }
+      .badge-blue {
+        background: var(--ctp-blue);
+        color: var(--ctp-crust);
+      }
+      .badge-green {
+        background: var(--ctp-green);
+        color: var(--ctp-crust);
+      }
+      .badge-peach {
+        background: var(--ctp-peach);
+        color: var(--ctp-crust);
+      }
+      .badge-teal {
+        background: var(--ctp-teal);
+        color: var(--ctp-crust);
+      }
+
+      .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+      }
+
+      .nda-notice {
+        background: var(--ctp-surface0);
+        border: 1px solid var(--ctp-overlay0);
+        border-left: 4px solid var(--ctp-yellow);
+        border-radius: 8px;
+        padding: 1rem 1.25rem;
+        margin-bottom: 2.5rem;
+        font-size: 0.9rem;
+        color: var(--ctp-subtext1);
+      }
+
+      .nda-notice strong {
+        color: var(--ctp-yellow);
+      }
+
+      section {
+        margin-bottom: 2.5rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--ctp-lavender);
+        margin-bottom: 1rem;
+        padding-bottom: 0.4rem;
+        border-bottom: 2px solid var(--ctp-surface1);
+      }
+
+      h3 {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--ctp-sapphire);
+        margin: 1.25rem 0 0.6rem 0;
+      }
+
+      p {
+        margin-bottom: 0.9rem;
+        color: var(--ctp-subtext1);
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1rem;
+        margin: 1rem 0;
+      }
+
+      .card {
+        background: var(--ctp-surface0);
+        border: 1px solid var(--ctp-surface1);
+        border-radius: 10px;
+        padding: 1.25rem;
+        transition: border-color 0.2s;
+      }
+
+      .card:hover {
+        border-color: var(--ctp-overlay0);
+      }
+
+      .card .card-title {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 0.4rem;
+      }
+
+      .card p {
+        font-size: 0.9rem;
+        margin-bottom: 0;
+      }
+
+      .card .card-title.mauve {
+        color: var(--ctp-mauve);
+      }
+      .card .card-title.blue {
+        color: var(--ctp-blue);
+      }
+      .card .card-title.green {
+        color: var(--ctp-green);
+      }
+      .card .card-title.peach {
+        color: var(--ctp-peach);
+      }
+      .card .card-title.teal {
+        color: var(--ctp-teal);
+      }
+      .card .card-title.pink {
+        color: var(--ctp-pink);
+      }
+      .card .card-title.sky {
+        color: var(--ctp-sky);
+      }
+      .card .card-title.yellow {
+        color: var(--ctp-yellow);
+      }
+      .card .card-title.red {
+        color: var(--ctp-red);
+      }
+      .card .card-title.flamingo {
+        color: var(--ctp-flamingo);
+      }
+
+      /* Diagrams */
+      .diagram {
+        background: var(--ctp-mantle);
+        border: 1px solid var(--ctp-surface1);
+        border-radius: 10px;
+        padding: 1.5rem;
+        margin: 1.25rem 0;
+        overflow-x: auto;
+      }
+
+      .diagram-title {
+        text-align: center;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--ctp-overlay2);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 1rem;
+      }
+
+      /* SVG Architecture Diagram */
+      .arch-svg {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+      }
+
+      /* Flow diagram using CSS */
+      .flow {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        flex-wrap: wrap;
+        padding: 0.5rem 0;
+      }
+
+      .flow-node {
+        background: var(--ctp-surface0);
+        border: 2px solid var(--ctp-surface2);
+        border-radius: 8px;
+        padding: 0.6rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-align: center;
+        min-width: 100px;
+        color: var(--ctp-text);
+      }
+
+      .flow-arrow {
+        color: var(--ctp-overlay1);
+        font-size: 1.2rem;
+        padding: 0 0.3rem;
+      }
+
+      .flow-node.highlight-mauve {
+        border-color: var(--ctp-mauve);
+        color: var(--ctp-mauve);
+      }
+      .flow-node.highlight-blue {
+        border-color: var(--ctp-blue);
+        color: var(--ctp-blue);
+      }
+      .flow-node.highlight-green {
+        border-color: var(--ctp-green);
+        color: var(--ctp-green);
+      }
+      .flow-node.highlight-peach {
+        border-color: var(--ctp-peach);
+        color: var(--ctp-peach);
+      }
+      .flow-node.highlight-teal {
+        border-color: var(--ctp-teal);
+        color: var(--ctp-teal);
+      }
+
+      /* Tree view */
+      .tree {
+        font-family: "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        color: var(--ctp-subtext0);
+        white-space: pre;
+        overflow-x: auto;
+      }
+
+      .tree .dir {
+        color: var(--ctp-blue);
+        font-weight: 600;
+      }
+      .tree .file {
+        color: var(--ctp-text);
+      }
+      .tree .desc {
+        color: var(--ctp-overlay1);
+        font-style: italic;
+      }
+
+      /* Responsibility list */
+      .resp-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .resp-list li {
+        padding: 0.6rem 0;
+        padding-left: 1.5rem;
+        position: relative;
+        color: var(--ctp-subtext1);
+        font-size: 0.95rem;
+      }
+
+      .resp-list li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--ctp-mauve);
+        font-weight: 700;
+      }
+
+      .resp-list li strong {
+        color: var(--ctp-text);
+      }
+
+      /* Table */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+
+      th {
+        background: var(--ctp-surface0);
+        color: var(--ctp-lavender);
+        text-align: left;
+        padding: 0.7rem 1rem;
+        font-weight: 600;
+        border-bottom: 2px solid var(--ctp-surface2);
+      }
+
+      td {
+        padding: 0.6rem 1rem;
+        border-bottom: 1px solid var(--ctp-surface1);
+        color: var(--ctp-subtext1);
+      }
+
+      tr:hover td {
+        background: var(--ctp-surface0);
+      }
+
+      code {
+        background: var(--ctp-surface0);
+        color: var(--ctp-peach);
+        padding: 0.15rem 0.4rem;
+        border-radius: 4px;
+        font-size: 0.88em;
+        font-family: "Fira Code", "Cascadia Code", monospace;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 680px) {
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+        .hero h1 {
+          font-size: 1.8rem;
+        }
+        .flow {
+          flex-direction: column;
+        }
+        .flow-arrow {
+          transform: rotate(90deg);
+        }
+      }
+
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: var(--ctp-overlay0);
+        font-size: 0.8rem;
+        border-top: 1px solid var(--ctp-surface0);
+      }
+
+      .env-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+        margin: 1rem 0;
+      }
+
+      @media (max-width: 600px) {
+        .env-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .env-card {
+        background: var(--ctp-surface0);
+        border: 1px solid var(--ctp-surface1);
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+      }
+
+      .env-card .env-name {
+        font-weight: 700;
+        font-size: 1rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .env-card .env-desc {
+        font-size: 0.82rem;
+        color: var(--ctp-overlay2);
+      }
+
+      .env-card.env-dev {
+        border-top: 3px solid var(--ctp-green);
+      }
+      .env-card.env-dev .env-name {
+        color: var(--ctp-green);
+      }
+      .env-card.env-staging {
+        border-top: 3px solid var(--ctp-yellow);
+      }
+      .env-card.env-staging .env-name {
+        color: var(--ctp-yellow);
+      }
+      .env-card.env-prod {
+        border-top: 3px solid var(--ctp-red);
+      }
+      .env-card.env-prod .env-name {
+        color: var(--ctp-red);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ============ HERO ============ -->
+    <div class="hero">
+      <h1>Affirm - Frontend Lead Primer</h1>
+      <p class="subtitle">
+        Everything you need to know to decide if you'd like to lead frontend
+        development on a modern Vue/Nuxt application deployed at the edge.
+      </p>
+      <div class="badge-row">
+        <span class="badge badge-mauve">Nuxt 4</span>
+        <span class="badge badge-blue">Vue 3</span>
+        <span class="badge badge-green">Cloudflare Workers</span>
+        <span class="badge badge-peach">Tailwind v4 + DaisyUI v5</span>
+        <span class="badge badge-teal">TypeScript</span>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- NDA NOTICE -->
+      <div class="nda-notice">
+        <strong>ℹ NDA Notice:</strong> This document has been prepared to share
+        only publicly observable and non-proprietary information about the
+        project's technology, architecture, and role expectations. Proprietary
+        business logic, product concepts, scoring systems, evaluation
+        frameworks, and strategic plans are excluded in accordance with
+        confidentiality obligations. Full project details will be shared under
+        NDA upon joining the team.
+      </div>
+
+      <!-- ============ ABOUT THE PROJECT ============ -->
+      <section>
+        <h2>About the Project</h2>
+        <p>
+          <strong>Affirm</strong> is a web application being built by the
+          <strong>Trans Equity Coalition (TEC)</strong>, a non-profit
+          organisation. The project is in its <strong>early stages</strong> —
+          the technical scaffolding and infrastructure are in place, but the
+          substantive frontend work is just beginning. This is a greenfield
+          opportunity to shape the application from the ground up.
+        </p>
+        <p>
+          The codebase is hosted on GitHub within a multi-repo organisation. The
+          main application repo (<code>affirm</code>) is where the vast majority
+          of frontend work will happen. Supporting repos handle org-level
+          configuration, internal discussions, presentations, and encrypted
+          secrets management.
+        </p>
+        <p>
+          The team is small. There is currently a primary maintainer handling
+          architecture, DevOps, and backend concerns, with at least one other
+          contributor who has begun initial work. The
+          <strong>frontend lead</strong> role is a critical gap - the person
+          filling it will have significant influence over the direction and
+          quality of the user-facing application.
+        </p>
+      </section>
+
+      <!-- ============ TECH STACK ============ -->
+      <section>
+        <h2>Tech Stack Overview</h2>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title mauve">Nuxt 4 + Vue 3</div>
+            <p>
+              Full-stack Vue framework with file-based routing, auto-imports,
+              server routes, and the Composition API via
+              <code>&lt;script setup lang="ts"&gt;</code>.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title green">Cloudflare Workers</div>
+            <p>
+              Edge deployment using the <code>cloudflare_module</code> Nitro
+              preset. Fast cold starts, global distribution, no traditional
+              server to manage.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title blue">Cloudflare D1</div>
+            <p>
+              SQLite-based serverless database with
+              <strong>Drizzle ORM</strong> for type-safe schema definition,
+              migrations, and queries.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title peach">Tailwind CSS v4 + DaisyUI v5</div>
+            <p>
+              Utility-first CSS with a comprehensive component library. Themed
+              with the <strong>Catppuccin Mocha</strong> colour palette for a
+              distinctive dark-mode aesthetic.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title teal">TypeScript</div>
+            <p>
+              Strict typing throughout - components, composables, server routes,
+              and database schema are all fully typed.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title pink">Bun</div>
+            <p>
+              Fast JavaScript runtime and package manager (v1.3.10). Used for
+              installs, scripts, and the dev server.
+            </p>
+          </div>
+        </div>
+
+        <h3>Additional Nuxt Modules</h3>
+        <p>
+          The project has nine Nuxt modules pre-configured, covering
+          accessibility (<code>@nuxt/a11y</code>), content management
+          (<code>@nuxt/content</code>), icon rendering, image optimisation, font
+          handling, ESLint integration, performance hints, and script
+          management. This is a well-stocked foundation - the tooling decisions
+          have been made so you can focus on building.
+        </p>
+      </section>
+
+      <!-- ============ ARCHITECTURE DIAGRAM ============ -->
+      <section>
+        <h2>Architecture</h2>
+
+        <div class="diagram">
+          <div class="diagram-title">Deployment &amp; Data Flow</div>
+          <svg
+            class="arch-svg"
+            viewBox="0 0 800 340"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+          >
+            <!-- User -->
+            <rect
+              x="20"
+              y="140"
+              width="120"
+              height="60"
+              rx="10"
+              fill="#313244"
+              stroke="#cba6f7"
+              stroke-width="2"
+            />
+            <text
+              x="80"
+              y="175"
+              text-anchor="middle"
+              fill="#cdd6f4"
+              font-size="14"
+              font-weight="600"
+            >
+              User / Browser
+            </text>
+
+            <!-- Arrow 1 -->
+            <line
+              x1="140"
+              y1="170"
+              x2="200"
+              y2="170"
+              stroke="#7f849c"
+              stroke-width="2"
+              marker-end="url(#arrowhead)"
+            />
+
+            <!-- Cloudflare Edge -->
+            <rect
+              x="200"
+              y="100"
+              width="200"
+              height="140"
+              rx="12"
+              fill="#181825"
+              stroke="#89b4fa"
+              stroke-width="2"
+            />
+            <text
+              x="300"
+              y="130"
+              text-anchor="middle"
+              fill="#89b4fa"
+              font-size="13"
+              font-weight="700"
+            >
+              Cloudflare Edge
+            </text>
+            <!-- Worker -->
+            <rect
+              x="220"
+              y="145"
+              width="160"
+              height="36"
+              rx="6"
+              fill="#313244"
+              stroke="#a6e3a1"
+              stroke-width="1.5"
+            />
+            <text
+              x="300"
+              y="168"
+              text-anchor="middle"
+              fill="#a6e3a1"
+              font-size="12"
+              font-weight="600"
+            >
+              Worker (Nitro SSR)
+            </text>
+            <!-- Static -->
+            <rect
+              x="220"
+              y="190"
+              width="160"
+              height="36"
+              rx="6"
+              fill="#313244"
+              stroke="#fab387"
+              stroke-width="1.5"
+            />
+            <text
+              x="300"
+              y="213"
+              text-anchor="middle"
+              fill="#fab387"
+              font-size="12"
+              font-weight="600"
+            >
+              Static Assets (CDN)
+            </text>
+
+            <!-- Arrow 2 -->
+            <line
+              x1="400"
+              y1="163"
+              x2="480"
+              y2="115"
+              stroke="#7f849c"
+              stroke-width="2"
+              marker-end="url(#arrowhead)"
+            />
+            <line
+              x1="400"
+              y1="163"
+              x2="480"
+              y2="215"
+              stroke="#7f849c"
+              stroke-width="2"
+              marker-end="url(#arrowhead)"
+            />
+
+            <!-- D1 -->
+            <rect
+              x="480"
+              y="85"
+              width="140"
+              height="55"
+              rx="10"
+              fill="#313244"
+              stroke="#89dceb"
+              stroke-width="2"
+            />
+            <text
+              x="550"
+              y="110"
+              text-anchor="middle"
+              fill="#89dceb"
+              font-size="13"
+              font-weight="600"
+            >
+              D1 Database
+            </text>
+            <text
+              x="550"
+              y="128"
+              text-anchor="middle"
+              fill="#6c7086"
+              font-size="11"
+            >
+              (SQLite / Drizzle)
+            </text>
+
+            <!-- Server API -->
+            <rect
+              x="480"
+              y="195"
+              width="140"
+              height="55"
+              rx="10"
+              fill="#313244"
+              stroke="#f5c2e7"
+              stroke-width="2"
+            />
+            <text
+              x="550"
+              y="220"
+              text-anchor="middle"
+              fill="#f5c2e7"
+              font-size="13"
+              font-weight="600"
+            >
+              Server API
+            </text>
+            <text
+              x="550"
+              y="238"
+              text-anchor="middle"
+              fill="#6c7086"
+              font-size="11"
+            >
+              (Nitro Routes)
+            </text>
+
+            <!-- GitHub / CI -->
+            <rect
+              x="640"
+              y="140"
+              width="140"
+              height="60"
+              rx="10"
+              fill="#313244"
+              stroke="#f9e2af"
+              stroke-width="2"
+            />
+            <text
+              x="710"
+              y="165"
+              text-anchor="middle"
+              fill="#f9e2af"
+              font-size="13"
+              font-weight="600"
+            >
+              GitHub + CI
+            </text>
+            <text
+              x="710"
+              y="183"
+              text-anchor="middle"
+              fill="#6c7086"
+              font-size="11"
+            >
+              (Workers Builds)
+            </text>
+
+            <!-- Arrow from GitHub to CF -->
+            <line
+              x1="640"
+              y1="170"
+              x2="400"
+              y2="170"
+              stroke="#7f849c"
+              stroke-width="1.5"
+              stroke-dasharray="6,3"
+              marker-end="url(#arrowhead)"
+            />
+            <text
+              x="520"
+              y="162"
+              text-anchor="middle"
+              fill="#585b70"
+              font-size="10"
+            >
+              deploy
+            </text>
+
+            <!-- Arrowhead marker -->
+            <defs>
+              <marker
+                id="arrowhead"
+                markerWidth="8"
+                markerHeight="6"
+                refX="8"
+                refY="3"
+                orient="auto"
+              >
+                <polygon points="0 0, 8 3, 0 6" fill="#7f849c" />
+              </marker>
+            </defs>
+          </svg>
+        </div>
+
+        <div class="diagram">
+          <div class="diagram-title">Branch &amp; Deployment Pipeline</div>
+          <div class="flow">
+            <div class="flow-node">Feature Branch</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node">Pull Request</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-mauve">2 Approvals</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-blue">staging</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-mauve">2 Approvals</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-green">production</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ENVIRONMENTS ============ -->
+      <section>
+        <h2>Environments</h2>
+        <p>
+          Three fully isolated environments are configured, each with its own
+          Cloudflare D1 database and Wrangler configuration:
+        </p>
+        <div class="env-grid">
+          <div class="env-card env-dev">
+            <div class="env-name">Local Dev</div>
+            <div class="env-desc">
+              Local D1 emulation via Wrangler. Hot reload with
+              <code>bun run dev</code>.
+            </div>
+          </div>
+          <div class="env-card env-staging">
+            <div class="env-name">Staging</div>
+            <div class="env-desc">
+              Integration branch. Remote D1. Auto-deploys via Workers Builds on
+              merge.
+            </div>
+          </div>
+          <div class="env-card env-prod">
+            <div class="env-name">Production</div>
+            <div class="env-desc">
+              Live. Separate D1 instance. Protected branch, 2 approvals
+              required.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ PROJECT STRUCTURE ============ -->
+      <section>
+        <h2>Project Structure</h2>
+        <div class="diagram">
+          <div class="diagram-title">Key directories in the affirm repo</div>
+          <div class="tree">
+            <span class="dir">affirm/</span> ├── <span class="dir">app/</span>
+            <span class="desc">← Nuxt app layer (your main workspace)</span> │
+            ├── <span class="dir">assets/css/</span>
+            <span class="desc">← Tailwind config, Catppuccin theme</span> │ ├──
+            <span class="dir">components/</span>
+            <span class="desc">← Auto-imported Vue components</span> │ ├──
+            <span class="dir">composables/</span>
+            <span class="desc">← Auto-imported reactive utilities</span> │ ├──
+            <span class="dir">layouts/</span>
+            <span class="desc">← Page layout wrappers</span> │ ├──
+            <span class="dir">middleware/</span>
+            <span class="desc"
+              >← Route middleware (global &amp; per-route)</span
+            >
+            │ ├── <span class="dir">pages/</span>
+            <span class="desc">← File-based routing</span> │ └──
+            <span class="dir">plugins/</span>
+            <span class="desc">← App-level plugins</span> ├──
+            <span class="dir">server/</span>
+            <span class="desc">← Backend (Nitro server engine)</span> │ ├──
+            <span class="dir">api/</span>
+            <span class="desc">← API route handlers</span> │ ├──
+            <span class="dir">database/</span>
+            <span class="desc">← Drizzle schema &amp; migrations</span> │ └──
+            <span class="dir">utils/</span>
+            <span class="desc">← Server-side utilities (DB helper, etc.)</span>
+            ├── <span class="dir">shared/</span>
+            <span class="desc">← Shared code (auto-imported everywhere)</span> │
+            └── <span class="dir">utils/</span>
+            <span class="desc"
+              >← Functions usable in both app &amp; server</span
+            >
+            ├── <span class="dir">content/</span>
+            <span class="desc">← Nuxt Content (Markdown-based copy)</span> ├──
+            <span class="dir">public/</span>
+            <span class="desc">← Static assets served as-is</span> ├──
+            <span class="file">nuxt.config.ts</span>
+            <span class="desc">← Framework configuration</span> ├──
+            <span class="file">wrangler.jsonc</span>
+            <span class="desc">← Cloudflare Workers production config</span> └──
+            <span class="file">drizzle.config.ts</span>
+            <span class="desc">← Database tooling config</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CURRENT STATE ============ -->
+      <section>
+        <h2>Current State of the Codebase</h2>
+        <p>
+          The application is in <strong>early scaffolding</strong>.
+          Infrastructure, tooling, CI/CD, and developer experience are all
+          well-configured, but the substantive UI work hasn't begun. What exists
+          today:
+        </p>
+
+        <div class="two-col">
+          <div>
+            <h3>✓ What's Done</h3>
+            <ul class="resp-list">
+              <li>
+                <strong>Full Nuxt 4 skeleton</strong> with nine modules
+                configured
+              </li>
+              <li>
+                <strong>Cloudflare Workers deployment</strong> pipeline (three
+                environments)
+              </li>
+              <li>
+                <strong>D1 + Drizzle ORM</strong> wired up with a starter schema
+              </li>
+              <li>
+                <strong>Tailwind v4 + DaisyUI v5</strong> with Catppuccin Mocha
+                theming
+              </li>
+              <li>
+                <strong>CI pipeline</strong> - lint (Trunk), typecheck, build
+              </li>
+              <li>
+                <strong>Branch protection</strong> on staging and production
+              </li>
+              <li>
+                <strong>Dependabot</strong> for automated dependency updates
+              </li>
+              <li>
+                <strong>Agent/contributor docs</strong> (AGENTS.md, README.md)
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3>✗ What's Needed</h3>
+            <ul class="resp-list">
+              <li>
+                <strong>All user-facing UI</strong> beyond the placeholder pages
+              </li>
+              <li>
+                <strong>Component library</strong> - building out reusable
+                components
+              </li>
+              <li>
+                <strong>Page layouts</strong> for different sections of the app
+              </li>
+              <li>
+                <strong>Routing structure</strong> - defining the page hierarchy
+              </li>
+              <li>
+                <strong>State management</strong> patterns for complex state
+              </li>
+              <li>
+                <strong>API integration</strong> - consuming server endpoints
+                from the frontend
+              </li>
+              <li>
+                <strong>Testing</strong> - Vitest (unit) and Playwright (E2E)
+                are installed but no tests written yet
+              </li>
+              <li>
+                <strong>Accessibility</strong> - the a11y module is there, needs
+                to be put to work
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ROLE ============ -->
+      <section>
+        <h2>What the Frontend Lead Will Do</h2>
+        <p>
+          This is a hands-on leadership role. You'll be the primary person
+          building the user interface while also setting standards for any
+          contributors who join later.
+        </p>
+
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title mauve">Build the UI</div>
+            <p>
+              Translate designs and product requirements into Vue 3 components
+              using the Composition API, Tailwind CSS, and DaisyUI. This is the
+              core of the role - building pages, forms, data displays, and
+              interactive features.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title blue">Establish Patterns</div>
+            <p>
+              Define component architecture, composable patterns, state
+              management approach, and naming conventions. You'll set the
+              precedent that future contributors follow.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title green">Own Accessibility</div>
+            <p>
+              The <code>@nuxt/a11y</code> module is already in place. Ensure the
+              application meets WCAG standards - semantic HTML, keyboard
+              navigation, screen reader support, and colour contrast.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title peach">Write Tests</div>
+            <p>
+              Establish the testing culture. Vitest for component/unit tests and
+              Playwright for end-to-end flows. Both are installed and
+              configured, just waiting for tests.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title teal">Collaborate on API Design</div>
+            <p>
+              Work with the backend/infra maintainer to define API contracts.
+              Nuxt's server routes live in the same repo, so you'll have full
+              visibility into the data layer.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title sky">Performance</div>
+            <p>
+              Leverage Nuxt's SSR on Cloudflare Workers for fast initial loads.
+              Optimise bundle size, lazy-load where appropriate, and make use of
+              the <code>@nuxt/hints</code> and <code>@nuxt/image</code> modules.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ DEV EXPERIENCE ============ -->
+      <section>
+        <h2>Developer Experience &amp; Tooling</h2>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Tool</th>
+              <th>Purpose</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Bun</strong></td>
+              <td>Package manager &amp; runtime</td>
+              <td>v1.3.10. All scripts run through <code>bun run</code>.</td>
+            </tr>
+            <tr>
+              <td><strong>mise</strong></td>
+              <td>Tool version manager</td>
+              <td>Source of truth for tool versions (Node, Bun, etc.)</td>
+            </tr>
+            <tr>
+              <td><strong>Trunk</strong></td>
+              <td>Linting &amp; formatting</td>
+              <td>Manages ESLint, Prettier, and other linters. Run via CI.</td>
+            </tr>
+            <tr>
+              <td><strong>Wrangler</strong></td>
+              <td>Cloudflare dev tooling</td>
+              <td>Local D1 emulation, Workers preview, deployment.</td>
+            </tr>
+            <tr>
+              <td><strong>Drizzle Kit</strong></td>
+              <td>Database migrations</td>
+              <td>Generate and apply migrations from schema changes.</td>
+            </tr>
+            <tr>
+              <td><strong>Vitest</strong></td>
+              <td>Unit / component tests</td>
+              <td>Installed and configured, awaiting tests.</td>
+            </tr>
+            <tr>
+              <td><strong>Playwright</strong></td>
+              <td>End-to-end tests</td>
+              <td>Installed, no tests written yet.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Common Commands</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Command</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>bun install</code></td>
+              <td>Install dependencies</td>
+            </tr>
+            <tr>
+              <td><code>bun run dev</code></td>
+              <td>Start dev server (local D1)</td>
+            </tr>
+            <tr>
+              <td><code>bun run build</code></td>
+              <td>Production build</td>
+            </tr>
+            <tr>
+              <td><code>bun run lint:types</code></td>
+              <td>TypeScript type checking</td>
+            </tr>
+            <tr>
+              <td><code>bun run db:generate</code></td>
+              <td>Generate migration from schema changes</td>
+            </tr>
+            <tr>
+              <td><code>bun run db:migrate</code></td>
+              <td>Apply migrations to local D1</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ============ DESIGN SYSTEM ============ -->
+      <section>
+        <h2>Design System &amp; Theming</h2>
+        <p>
+          The visual identity uses the <strong>Catppuccin Mocha</strong> palette
+          - a warm, pastel dark theme. It's integrated as a custom DaisyUI
+          theme, so all DaisyUI components automatically inherit the palette.
+          Here's the colour system you'd be working with:
+        </p>
+
+        <div class="diagram">
+          <div class="diagram-title">Catppuccin Mocha Palette (Selection)</div>
+          <div
+            style="
+              display: flex;
+              flex-wrap: wrap;
+              gap: 0.5rem;
+              justify-content: center;
+              padding: 0.5rem;
+            "
+          >
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #cba6f7;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Mauve</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #89b4fa;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Blue</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #74c7ec;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Sapphire</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #89dceb;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Sky</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #94e2d5;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Teal</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #a6e3a1;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Green</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #f9e2af;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Yellow</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #fab387;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Peach</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #f38ba8;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Red</span>
+            </div>
+            <div style="width: 60px; text-align: center">
+              <div
+                style="
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 8px;
+                  background: #f5c2e7;
+                  margin: 0 auto;
+                "
+              ></div>
+              <span style="font-size: 0.7rem; color: #a6adc8">Pink</span>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          The styling approach is: use <strong>DaisyUI components</strong> as
+          the base (buttons, cards, navbars, modals, etc.), customise with
+          <strong>Tailwind utilities</strong> when needed, and lean on the
+          Catppuccin palette for consistent colour. This document itself is
+          styled with the same palette to give you a feel for it.
+        </p>
+      </section>
+
+      <!-- ============ CODING PATTERNS ============ -->
+      <section>
+        <h2>Coding Patterns &amp; Conventions</h2>
+
+        <div class="two-col">
+          <div>
+            <h3>Components</h3>
+            <p>
+              Vue 3 Single File Components using
+              <code>&lt;script setup lang="ts"&gt;</code>. All components in
+              <code>app/components/</code> are auto-imported - no manual import
+              statements needed. Props are typed with TypeScript interfaces.
+            </p>
+          </div>
+          <div>
+            <h3>Composables</h3>
+            <p>
+              Reactive utilities in <code>app/composables/</code> follow the
+              <code>use*</code>
+              naming convention and are auto-imported. These are the building
+              blocks for shared state and logic.
+            </p>
+          </div>
+          <div>
+            <h3>Server Routes</h3>
+            <p>
+              API endpoints live in <code>server/api/</code> using Nitro's
+              file-based routing. They follow the
+              <code>name.method.ts</code> convention (e.g.
+              <code>hello.get.ts</code>). D1 access uses a
+              <code>useDB(event)</code> helper.
+            </p>
+          </div>
+          <div>
+            <h3>Shared Utilities</h3>
+            <p>
+              Code in <code>shared/utils/</code> is auto-imported in both the
+              app and server contexts. Ideal for pure functions like formatting,
+              validation, and type guards.
+            </p>
+          </div>
+        </div>
+
+        <h3>Style Conventions</h3>
+        <p>
+          Indentation is 2 spaces for TypeScript/Vue/JSON (4 spaces for Python,
+          Rust, and Fish; tabs for Go). Max line length is 120 characters. Trunk
+          handles all linting and formatting enforcement, and CI will catch any
+          violations.
+        </p>
+      </section>
+
+      <!-- ============ WHAT TO EXPECT ============ -->
+      <section>
+        <h2>What to Expect</h2>
+        <div class="card-grid">
+          <div class="card">
+            <div class="card-title flamingo">Non-Profit Context</div>
+            <p>
+              TEC is a non-profit organisation focused on equity. The project
+              has social purpose at its core, which shapes priorities and
+              decision-making.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title yellow">Small Team, Big Impact</div>
+            <p>
+              With a small team, your decisions carry weight. You'll shape
+              architecture, establish standards, and build the foundation others
+              will extend.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title red">NDA Required</div>
+            <p>
+              Full project details (product concepts, business logic, UX flows)
+              are shared under NDA. You'll need to sign before accessing the
+              complete picture.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-title green">Modern, Opinionated Stack</div>
+            <p>
+              The tech choices have been made thoughtfully. You're working with
+              current, well-supported tools - not legacy code or migration debt.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ GETTING STARTED ============ -->
+      <section>
+        <h2>Getting Started (Once Onboarded)</h2>
+        <p>
+          After signing the NDA and gaining repo access, setup is
+          straightforward:
+        </p>
+        <div class="diagram">
+          <div class="flow">
+            <div class="flow-node highlight-mauve">Install mise</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-blue">mise install</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-teal">bun install</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-green">bun run dev</div>
+            <span class="flow-arrow">→</span>
+            <div class="flow-node highlight-peach">Build! 🚀</div>
+          </div>
+        </div>
+        <p>
+          The repo includes a comprehensive <code>README.md</code> and
+          <code>AGENTS.md</code> that cover architecture decisions, gotchas, and
+          conventions in detail. The existing placeholder pages serve as working
+          examples of every pattern you'll use.
+        </p>
+      </section>
+
+      <!-- ============ SUMMARY ============ -->
+      <section>
+        <h2>TL;DR</h2>
+        <p>
+          You'd be the <strong>first frontend lead</strong> on a greenfield
+          <strong>Nuxt 4 + Vue 3</strong> application for a non-profit, deployed
+          to <strong>Cloudflare Workers</strong> with <strong>D1</strong> as the
+          database. The infrastructure, tooling, and DevOps are already solid —
+          what's needed is someone to
+          <strong>build the actual user interface</strong>, establish frontend
+          patterns, and ensure quality through testing and accessibility. It's a
+          small team where your work will have outsized impact.
+        </p>
+        <p>
+          If this sounds like your kind of challenge, the next step is signing
+          the NDA to get the full picture of what you'd be building.
+        </p>
+      </section>
+    </div>
+
+    <div class="footer">
+      Affirm Frontend Lead Primer · Trans Equity Coalition · Prepared March 2026
+    </div>
+  </body>
+</html>
