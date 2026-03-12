@@ -44,6 +44,68 @@ Red Button messages are tagged high-priority on Pushover. This means they'll mak
 
 Blue Button messages are tagged as normal priority; they'll make a different noise, won't override silencing, and will be more polite about getting my attention.
 
+```mermaid
+---
+config:
+  theme: redux-dark-color
+id: 9c3e90ae-2598-4e2b-a0b8-73f19a4b837a
+---
+sequenceDiagram
+    participant User
+    participant NuxtSite as syn.horse (Nuxt Site)
+    participant Backend
+    participant CFQueues as Cloudflare Queues
+    participant Worker
+    participant Pushover
+    participant Phone
+
+    User->>NuxtSite: Press Big Red Button or Small Blue Button
+    NuxtSite->>Backend: HTTP Request
+    Backend->>CFQueues: Send Message (Priority Tag)
+    CFQueues->>CFQueues: Queue Message
+    Worker->>CFQueues: Poll Queue
+    CFQueues->>Worker: Retrieve Message
+    Worker->>Pushover: Send Notification (High or Normal Priority)
+    alt Pushover Success
+        Pushover->>Phone: Deliver Alert
+        Phone->>User: Sound + Notification
+        Worker->>CFQueues: Acknowledge Message
+    else Pushover Fails
+        Worker->>CFQueues: Retry (Message Stays) until Success
+    end
+```
+
+```mermaid
+---
+config:
+  theme: redux-dark-color
+id: ae2f455d-9ff1-451e-bc38-9b8f4b791408
+---
+sequenceDiagram
+    participant User
+    participant NuxtSite as syn.horse (Nuxt Site)
+    participant Backend
+    participant CFQueues as Cloudflare Queues
+    participant Worker
+    participant Pushover
+    participant Phone
+
+    User->>NuxtSite: Press Big Red Button or Small Blue Button
+    NuxtSite->>Backend: HTTP Request
+    Backend->>CFQueues: Send Message (Priority Tag)
+    CFQueues->>CFQueues: Queue Message
+    Worker->>CFQueues: Poll Queue
+    CFQueues->>Worker: Retrieve Message
+    Worker->>Pushover: Send Notification (High or Normal Priority)
+    alt Pushover Success
+        Pushover->>Phone: Deliver Alert
+        Phone->>User: Sound + Notification
+        Worker->>CFQueues: Acknowledge Message
+    else Pushover Fails
+        Worker->>CFQueues: Retry (Message Stays) until Success
+    end
+```
+
 ## The when?
 
 I'm working on it. ETA is "when it's done". Until then, Signal is the place to get in touch with me urgently.
