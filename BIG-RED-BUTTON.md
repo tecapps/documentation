@@ -38,73 +38,38 @@ A user can hit either button, which will trigger a request to the backend. The b
 
 Using the queues means that the system is more resilient to failures. As long as the message makes it into the queue, it will stay there until processed.
 
+```mermaid
+---
+config:
+  theme: redux-dark-color
+id: f2f6054c-388f-4611-886a-b389851f8f9f
+---
+sequenceDiagram
+    participant Worker
+    participant CFQueues as Cloudflare Queues
+    participant Pushover
+    participant Phone
+
+    Worker->>CFQueues: Poll for Message
+    CFQueues-->>Worker: Deliver Message
+    Worker->>Pushover: Send Notification
+    alt Notification Delivery Fails
+        Pushover--x Worker: Error Response
+        Worker->>CFQueues: Do NOT Acknowledge (Message Remains)
+        Note right of CFQueues: Message Retained For Retry
+        Worker->>Worker: Wait and Retry Later
+    else Notification Delivered
+        Pushover->>Phone: Deliver Notification
+        Phone->>Worker: User Acknowledges
+        Worker->>CFQueues: Acknowledge Message (Remove from Queue)
+    end
+```
+
 When processed, the worker will attempt to send the notification to Pushover. If it fails, it will not consume the message from the queue, and it will inherently be retried until it succeeds.
 
 Red Button messages are tagged high-priority on Pushover. This means they'll make a louder noise, override any silencing, and generally be total shitbags until they're acknowledged.
 
 Blue Button messages are tagged as normal priority; they'll make a different noise, won't override silencing, and will be more polite about getting my attention.
-
-```mermaid
----
-config:
-  theme: redux-dark-color
-id: 9c3e90ae-2598-4e2b-a0b8-73f19a4b837a
----
-sequenceDiagram
-    participant User
-    participant NuxtSite as syn.horse (Nuxt Site)
-    participant Backend
-    participant CFQueues as Cloudflare Queues
-    participant Worker
-    participant Pushover
-    participant Phone
-
-    User->>NuxtSite: Press Big Red Button or Small Blue Button
-    NuxtSite->>Backend: HTTP Request
-    Backend->>CFQueues: Send Message (Priority Tag)
-    CFQueues->>CFQueues: Queue Message
-    Worker->>CFQueues: Poll Queue
-    CFQueues->>Worker: Retrieve Message
-    Worker->>Pushover: Send Notification (High or Normal Priority)
-    alt Pushover Success
-        Pushover->>Phone: Deliver Alert
-        Phone->>User: Sound + Notification
-        Worker->>CFQueues: Acknowledge Message
-    else Pushover Fails
-        Worker->>CFQueues: Retry (Message Stays) until Success
-    end
-```
-
-```mermaid
----
-config:
-  theme: redux-dark-color
-id: ae2f455d-9ff1-451e-bc38-9b8f4b791408
----
-sequenceDiagram
-    participant User
-    participant NuxtSite as syn.horse (Nuxt Site)
-    participant Backend
-    participant CFQueues as Cloudflare Queues
-    participant Worker
-    participant Pushover
-    participant Phone
-
-    User->>NuxtSite: Press Big Red Button or Small Blue Button
-    NuxtSite->>Backend: HTTP Request
-    Backend->>CFQueues: Send Message (Priority Tag)
-    CFQueues->>CFQueues: Queue Message
-    Worker->>CFQueues: Poll Queue
-    CFQueues->>Worker: Retrieve Message
-    Worker->>Pushover: Send Notification (High or Normal Priority)
-    alt Pushover Success
-        Pushover->>Phone: Deliver Alert
-        Phone->>User: Sound + Notification
-        Worker->>CFQueues: Acknowledge Message
-    else Pushover Fails
-        Worker->>CFQueues: Retry (Message Stays) until Success
-    end
-```
 
 ## The when?
 
