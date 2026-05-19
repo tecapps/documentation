@@ -2,12 +2,48 @@
 
 Hello, frontend person. Welcome to **Affirm**. You have been chosen. I'm `syn` and you're about to learn a thing.
 
-> "I'm not a frontend developer."
-> _-- syn, `README.md`_
+> "I'm not a frontend developer." _-- syn, `README.md`_
 
 I do ops. I do not do frontend. So if you've been wondering why a project that runs on the edge, hits a SQLite database in twenty-something data centres, and lints itself with three different tools also looks like someone glued a potato to Vue and pushed, then congratulations. That's now your job.
 
 We are very pleased to have you. Please don't leave.
+
+---
+
+## People
+
+The big queer disaster areas you'll be working with.
+
+> [!WARNING]
+> I may have got pronouns wrong. Honestly, blame memory issues with the MS. Be cautious of taking these as fact.
+
+### Miriam - she/her
+
+Our point of contact with the board. Queen of the project.
+
+### Zylith (Z) - they/them
+
+Project manager. If you have a concern which affects the project on a systemic basis, Z is your point of contact.
+
+### Selene - she/her
+
+Backend developer. If you want to work through something affecting the full stack, tap Selene.
+
+### Radiant - he/him
+
+Came on as frontend developer, was dicked about by employers. That has now resolved (which we didn't expect to happen), so may be working with you.
+
+### Paige - she/her?
+
+Backend or DBops. Has recently written some schema documents.
+
+### Dan - he/him?
+
+TEC board member, joined the channels to keep an eye on things.
+
+### `syn` (that's me!) - they/them
+
+DevOps. I picked the stack, built the repo, and wrote some initial code for this, as well as the CI and other glue. Also responding to pages at <https://syn.horse/panic> (we'll talk about that later).
 
 ---
 
@@ -385,6 +421,19 @@ I truly do not care if you don't want to do this.
   - Fuck my life.
 - **Existing files** - `app/pages/about.vue` is a deliberately well-commented kitchen-sink of frontend patterns. Steal from it.
 - **syn** - when all else fails, ask them. They're friendly. They said so themself at the bottom of the README.
+
+---
+
+## Big Red Button
+
+I've built a system so you can page me if you need me. If you spot that the system's floundering, hop over to <https://syn.horse/panic>.
+
+You have two choices.
+
+- **Big Red Button**
+  - Use this if the site is down or you have a security issue. It will page me at any hour of the day.
+- _small green button_
+  - Use this if you need my attention, but it can wait until I'm awake. Expect a response within 24 hours.
 
 ---
 
