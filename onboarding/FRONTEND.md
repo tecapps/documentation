@@ -373,8 +373,11 @@ I truly do not care if you don't want to do this.
 
 - **`README.md`** - the existing human-facing docs, more general than this one.
 - **`AGENTS.md`** (= `CLAUDE.md`) - the version of the docs that AI assistants read. Sometimes has things the README doesn't.
-- **`GETTING-STARTED.md`** - long-form walkthrough of the stack. I wrote it many moons ago and it is basically this document.
-  - You will note that I've spotted it 17,000 characters in. Fuck my life.
+- **`GETTING-STARTED.md`** - long-form walkthrough of the stack.
+  - I wrote it many moons ago and it is basically this document.
+  - I promptly forgot about it.
+  - You will note that I've now spotted it 17,000 characters in.
+  - Fuck my life.
 - **Existing files** - `app/pages/about.vue` is a deliberately well-commented kitchen-sink of frontend patterns. Steal from it.
 - **syn** - when all else fails, ask them. They're friendly. They said so themself at the bottom of the README.
 
