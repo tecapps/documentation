@@ -1,8 +1,11 @@
-# Onboarding — for the Frontend Person
+# Frontend Onboarding
 
-Hello, frontend person. Welcome to **Affirm**. You have been chosen.
+Hello, frontend person. Welcome to **Affirm**. You have been chosen. I'm `syn` and you're about to learn a thing.
 
-The owner of this repo wrote, in the actual `README.md`, the words "I'm not a frontend developer." So if you've been wondering why a project that runs on the edge, hits a SQLite database in twenty-something data centres, and lints itself with three different tools also looks like it does — congratulations. That's now your job.
+> "I'm not a frontend developer."
+> _-- syn, `README.md`_
+
+I do ops. I do not do frontend. So if you've been wondering why a project that runs on the edge, hits a SQLite database in twenty-something data centres, and lints itself with three different tools also looks like someone glued a potato to Vue and pushed, then congratulations. That's now your job.
 
 We are very pleased to have you. Please don't leave.
 
@@ -10,15 +13,13 @@ We are very pleased to have you. Please don't leave.
 
 ## The thirty-second tl;dr
 
-```plaintext
-Nuxt 4 + Vue 3 (Composition API, <script setup lang="ts">)
-Tailwind CSS v4 + DaisyUI v5 + Catppuccin Mocha
-Cloudflare Workers + D1 (SQLite) + Drizzle ORM
-Bun for everything (install, run, scripts)
-Trunk + ESLint + Prettier for the lint/format mess
-Vitest (unit) + Playwright (e2e)
-No React. We do not speak of React.
-```
+- Nuxt 4 + Vue 3 (Composition API, `<script setup lang="ts">`)
+- Tailwind CSS v4 + DaisyUI v5 + Catppuccin Mocha
+- Cloudflare Workers + D1 (SQLite) + Drizzle ORM
+- Bun for everything (install, run, scripts)
+- Trunk + ESLint + Prettier for the lint/format mess
+- Vitest (unit) + Playwright (e2e)
+- No React. We do not speak of React.
 
 If any of that scares you: it shouldn't. If all of it scares you: same, honestly, but it works.
 
@@ -34,9 +35,11 @@ Nuxt 4 is what Next.js wishes it was when it grows up. Don't tell the Vercel peo
 
 ### Vue 3 with `<script setup>`
 
-We use the Composition API with `<script setup lang="ts">` exclusively. The Options API exists, philosophically. We just don't use it. If a PR shows up with `data()` and `methods:`, gently suggest the author retire to a quiet room and reflect on their choices.
+We use the Composition API with `<script setup lang="ts">` exclusively. The Options API exists, philosophically. We just don't use it. If a PR shows up with `data()` and `methods:`, we gently suggest the author retire to a quiet room and reflect on their choices.
 
 ### Tailwind v4 + DaisyUI v5
+
+> Want to change any of this? Go ahead. This is frontend dev territory. If you need any help yanking stuff out and replacing it with your preferred options, syn is here.
 
 - **Tailwind** gives you utility classes (`flex`, `p-6`, `text-3xl`, etc.).
 - **DaisyUI** gives you semantic component classes (`btn`, `card`, `navbar`, `hero`, `badge`).
@@ -52,19 +55,25 @@ There is **no `tailwind.config.js`**. Tailwind v4 moved the configuration into C
 @plugin "./catppuccin-mocha.ts";
 ```
 
-That `themes: false` is deliberate — DaisyUI's default themes are turned off so the Catppuccin Mocha plugin can be the only theme in town. The aesthetic is non-negotiable. (Well, it's negotiable. With Dave. Good luck.)
+That `themes: false` is deliberate - DaisyUI's default themes are turned off so the Catppuccin Mocha plugin can be the only theme in town.
 
-DaisyUI, by the way, doesn't have a "pro" version. The open-source one is the whole thing. Shocking, I know.
+#### Why DaisyUI and not NuxtUI?
+
+DaisyUI doesn't have a "pro" version. The open-source one is the whole thing. That's a rarity in UI kits.
+
+Shadcn Vue is a compelling option, but involves extra tooling and other wonk whereas DaisyUI is just plain CSS.
 
 ### Cloudflare Workers + D1
 
 Your Vue code runs on Cloudflare's edge. Yes, your Vue code runs on the edge. Yes, it's wild. No, don't think about cold starts. Workers don't really have those. Blink twice if you're impressed.
 
-The database is **D1** — SQLite that Cloudflare runs for us. You'll mostly interact with it through `useFetch` from your components, but if you ever need to know more, the schema lives in `server/database/schema.ts` and is managed with Drizzle.
+The database is **D1** - SQLite that Cloudflare runs for us and pretends it's a networked database. You'll mostly interact with it via the API in `server/`, but if you ever need to know more, the schema lives in `server/database/schema.ts` and is managed with Drizzle.
 
 ### Bun
 
 If you've been a Node person all your life, Bun is what Node would be if it stopped being haunted. Use `bun` and `bun run` where you'd normally type `npm` or `pnpm`. Install dependencies with `bun install`. Don't fight it.
+
+Also, `bun update` has saved me an inordinate amount of time lately.
 
 ---
 
@@ -73,8 +82,8 @@ If you've been a Node person all your life, Bun is what Node would be if it stop
 You will need:
 
 1. **[`mise`](https://github.com/jdx/mise)** for tool management. The repo has a `mise.toml` that pins the right versions of Bun, Node, etc.
-2. **[`bun`](https://bun.sh)** — `mise` will install it.
-3. **A Cloudflare account** isn't required for local dev, just for deploying. Ask Dave.
+2. **[`bun`](https://bun.sh)** - `mise` will install it.
+3. **A Cloudflare account** isn't required for local dev, just for deploying. Probably worth having anyway, gives you access to logs and observability. syn can send an invite to your email address.
 
 Then:
 
@@ -89,12 +98,12 @@ mise install
 bun install
 
 # start the dev server on http://localhost:3000
-bun run dev
+bun run dev # or just bun dev, I'm not your dad
 ```
 
 The dev server runs Nuxt with proxied Cloudflare bindings via `wrangler.dev.jsonc`, so D1 and friends Just Work locally. If you see a request fail because `DB` isn't bound, you probably ran a bare `nuxt dev` instead of `bun run dev`. Don't do that.
 
-> **Pro tip:** Nuxt Devtools are enabled (the floating Nuxt logo at the bottom of the page). It's actually useful. Don't dismiss it for three months only to discover it has a route inspector, like I did. Wait, that wasn't me. You didn't read that.
+> **Pro tip:** Nuxt Devtools are enabled (the floating Nuxt logo at the bottom of the page). It's actually useful. Don't dismiss it for three months only to discover it has a route inspector, like SOME PEOPLE. ps: me.
 
 ---
 
@@ -142,7 +151,8 @@ You create a file. That's it. That's the whole feature.
 
 No router config. No `router.ts`. No exporting of route objects. Nuxt reads the filesystem at build time and generates the route table itself.
 
-Use `<NuxtLink to="/about">` for internal links — it does client-side navigation. Use `<a href="...">` only for external links or you'll get sad full-page reloads and your colleagues will judge you silently.
+Use `<NuxtLink to="/about">` for internal links - it does client-side navigation. Use `<a href="...">` only for external links or you'll get sad full-page reloads and your colleagues will judge you silently. I'm also pretty sure you can use NuxtLink for external links? A question for [the
+docs](https://nuxt.com/docs/4.x/api/components/nuxt-link) I guess.
 
 ---
 
@@ -169,7 +179,7 @@ const { appName } = useAppInfo();
 </template>
 ```
 
-Where did `ref`, `computed`, `useAppInfo`, and `FeatureCard` come from? They came from the auto-import fairy. Don't argue with the fairy. Don't try to manually import them either — ESLint will tell on you.
+Where did `ref`, `computed`, `useAppInfo`, and `FeatureCard` come from? They came from the auto-import fairy. Don't argue with the fairy. Don't try to manually import them either - ESLint will tell on you.
 
 If your editor's autocomplete is confused about auto-imports, run `bun run postinstall` (or just `bun run nuxt prepare`) to regenerate the type definitions.
 
@@ -179,17 +189,19 @@ If your editor's autocomplete is confused about auto-imports, run `bun run posti
 
 Currently in `app/components/`:
 
-- **`AppHeader.vue`** — the top navbar (DaisyUI `navbar` class).
-- **`AppFooter.vue`** — the bottom thing.
-- **`FeatureCard.vue`** — a typed reusable card with props for title, description, optional badge, and a slot.
+- **`AppHeader.vue`** - the top navbar (DaisyUI `navbar` class).
+- **`AppFooter.vue`** - the bottom thing.
+- **`FeatureCard.vue`** - a typed reusable card with props for title, description, optional badge, and a slot.
 
 To add a new component, drop a `.vue` file in `app/components/` and use it by filename. `MyThing.vue` becomes `<MyThing />` everywhere, no imports. Nested folders get prefixed: `app/components/forms/InputField.vue` becomes `<FormsInputField />`.
 
-Props get typed via `defineProps<{ ... }>()`. Defaults via `withDefaults()`. See `FeatureCard.vue` for the canonical example — it's well-commented and worth reading.
+Props get typed via `defineProps<{ ... }>()`. Defaults via `withDefaults()`. See `FeatureCard.vue` for the canonical example - it's well-commented and worth reading.
 
 ---
 
 ## Styling: the Catppuccin Mocha experience
+
+> Again; you want to yank this out and replace it, you go ahead. This just describes how it is _now_.
 
 The colour palette is Catppuccin Mocha. It's a dark theme that looks like someone made a sunset out of dessert. You'll get used to it.
 
@@ -232,7 +244,7 @@ For genuinely global singletons (config, an SDK instance, a feature flag client)
 
 For state that needs to survive SSR hydration correctly, use `useState('key', () => initial)` instead of `ref()`. This is the Nuxt-blessed way to avoid hydration mismatch.
 
-We don't use Pinia. We don't need to. Yet. (If we do, we'll add it. Don't pre-emptively introduce it.)
+We don't use Pinia, but only because we don't need it yet. If you want it, grab it. It's the state management system which plays best with Nuxt.
 
 ---
 
@@ -242,7 +254,7 @@ We don't use Pinia. We don't need to. Yet. (If we do, we'll add it. Don't pre-em
 const { data, error, pending, refresh } = await useFetch("/api/hello");
 ```
 
-`useFetch` does the right thing on SSR (runs server-side, hydrates the result, doesn't double-fetch on the client). Use it. Don't reach for `$fetch` unless you have a specific reason — and you probably don't.
+`useFetch` does the right thing on SSR (runs server-side, hydrates the result, doesn't double-fetch on the client). Use it. Don't reach for `$fetch` unless you have a specific reason - and you probably don't. `$fetch` is for the backend.
 
 The endpoint above (`/api/hello`) is defined by the file `server/api/hello.get.ts`. The `.get.ts` suffix makes it GET-only. `.post.ts`, `.put.ts`, `.delete.ts` work too. No-suffix files (`hello.ts`) accept any method.
 
@@ -252,8 +264,8 @@ The endpoint above (`/api/hello`) is defined by the file `server/api/hello.get.t
 
 We use `@nuxt/icon` with Iconify icon sets. The currently-installed sets are:
 
-- **`heroicons`** — the workhorse UI icon set
-- **`logos`** — brand logos (Vue, Nuxt, Tailwind, etc.)
+- **`heroicons`** - the workhorse UI icon set
+- **`logos`** - brand logos (Vue, Nuxt, Tailwind, etc.)
 
 Use them like this:
 
@@ -262,7 +274,7 @@ Use them like this:
 <Icon name="logos:vue" size="2rem" />
 ```
 
-If you want a new icon set, add the `@iconify-json/whatever` package as a devDependency and you're done — `@nuxt/icon` will find it.
+`@nuxt/icon` will let you use any of the iconsets it supports, and it has a utility in the Nuxt devtools to make your life easier. If the package for an icon suite is not installed, it'll still work; it'll be fetched remotely, and startup will whinge about it. Just add the package and it'll shut up.
 
 ---
 
@@ -281,13 +293,15 @@ bun run build            # production build (don't forget --envName, the script 
 bun run preview          # build + wrangler dev to preview production locally
 ```
 
+Our formatting task is a bit of a cheat; first Prettier runs, to catch files Trunk misses, then Trunk runs to bring the important stuff into line. `bun format` does it all for you.
+
 A `bun run lint:fix && bun run lint:types` is the minimum you should run before pushing. CI will reject you otherwise. CI is not your friend; CI is your strict and disappointed parent.
 
 ---
 
 ## Browser / E2E testing
 
-We use **Playwright** for e2e. Tests live in… well, wherever Playwright is configured to look (check `playwright.config.ts` when it exists). For frontend dev work, the UI mode is invaluable:
+We haven't got any tests yet but we're set up for **Playwright** for e2e. Tests live in… well, wherever Playwright is configured to look (check `playwright.config.ts` when it exists). For frontend dev work, the UI mode is invaluable:
 
 ```bash
 bun run test:e2e:ui
@@ -301,11 +315,11 @@ It gives you a step-by-step replay of each test with DOM snapshots. Use it when 
 
 ### Branches
 
-- **`production`** — what's live. Don't push here directly. You can't anyway. It's protected.
-- **`staging`** — what's about to be live. Also protected.
-- **Your branches:** `yourname/short-purpose`, e.g. `daveio/fix-header`. Yes, this is bikeshedding. Yes, we do it anyway.
+- **`production`** - what's live. Don't push here directly. You can't anyway. It's protected.
+- **`staging`** - what's about to be live. Also protected.
+- **Your branches:** `yourname/short-purpose`, e.g. `synmux/fix-header`. Yes, this is bikeshedding. Yes, we do it anyway.
 
-PRs target `staging`. Two approvals required to merge. Dave will try to review yours; you can be one of the approvers on someone else's. Two-pairs-of-eyes is the whole point.
+PRs target `staging`. Two approvals required to merge. syn will try to review yours; you can be one of the approvers on someone else's. Two-pairs-of-eyes is the whole point.
 
 Every push to a PR-targeting-staging branch gets a **preview deployment** on the `affirm-staging` Worker. That URL is the easiest way to show someone what you've actually built. Use it.
 
@@ -333,9 +347,11 @@ Examples:
 
 Run `bun x gitmoji-cli list` to see the full emoji catalogue, or look at the recent git log to see what we've been using.
 
+I truly do not care if you don't want to do this.
+
 ### Signing commits
 
-**Please sign your commits.** You don't need GPG any more — Git supports SSH-key signing, and you're already using one of those to push. There's a guide [in GitHub's docs](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits). It takes ten minutes. Do it.
+**Please sign your commits.** You don't need GPG any more - Git supports SSH-key signing, and you're already using one of those to push. There's a guide [in GitHub's docs](https://docs.github.com/en/authentication/managing-commit-signature-verification/signing-commits). It takes ten minutes. Do it. please. Need help, ask syn.
 
 ---
 
@@ -345,20 +361,22 @@ Run `bun x gitmoji-cli list` to see the full emoji catalogue, or look at the rec
 2. **Auto-imports are real.** If your editor whines about `ref` being undefined, run `bun run postinstall` to regenerate types. Do not "fix" it by adding manual imports.
 3. **Nuxt 4, not 3.** App source is in `app/`, not the project root. Internet answers may be wrong.
 4. **`useFetch` is not `fetch`.** It's reactive, SSR-aware, and runs server-side during the initial render. Treat its return value as a `Ref`, not a plain value.
-5. **CSS lives in five lines.** Don't go hunting for `tailwind.config.js` — it isn't there. Tailwind v4 configures via CSS. The whole stylesheet entry is `app/assets/css/tailwind.css`.
-6. **Catppuccin Mocha is the only theme.** DaisyUI's defaults are explicitly disabled. If you want a new colour, talk to Dave before adding a one-off hex code.
-7. **British English** in user-facing copy. "Colour", not "color". "Organisation", not "organization". (Class names in CSS are American because that's how the libraries are written — don't fight that, just the prose.)
+5. **CSS lives in five lines.** Don't go hunting for `tailwind.config.js` - it isn't there. Tailwind v4 configures via CSS. The whole stylesheet entry is `app/assets/css/tailwind.css`.
+6. **Catppuccin Mocha is the only theme.** DaisyUI's defaults are explicitly disabled. Change that if you want to.
+7. **American English** in user-facing copy. "Color", not "colour". "Organization", not "organisation". It makes me very happy to be working with someone else who feels the pain about that.
 8. **No React.** I cannot stress this enough. If you find yourself wanting React, take a walk.
+9. The others are **not fans of AI**. Reasonable enough position; not mine. Still, it's the position which applies to this project because I'm outvoted (and fine with that). We don't integrate AI into PR review or anything like that. If you want to run it client-side, go for it. The `AGENTS.md` is the sole concession to AI in the code or tooling.
 
 ---
 
 ## When you're lost
 
-- **`README.md`** — the existing onboarding doc, more general than this one.
-- **`AGENTS.md`** (= `CLAUDE.md`) — the version of the docs that AI assistants read. Sometimes has things the README doesn't.
-- **`GETTING-STARTED.md`** — long-form walkthrough of the stack.
-- **Existing files** — `app/pages/about.vue` is a deliberately well-commented kitchen-sink of frontend patterns. Steal from it.
-- **Dave** — when all else fails, ask. He's friendly. He said so himself at the bottom of the README.
+- **`README.md`** - the existing human-facing docs, more general than this one.
+- **`AGENTS.md`** (= `CLAUDE.md`) - the version of the docs that AI assistants read. Sometimes has things the README doesn't.
+- **`GETTING-STARTED.md`** - long-form walkthrough of the stack. I wrote it many moons ago and it is basically this document.
+  - You will note that I've spotted it 17,000 characters in. Fuck my life.
+- **Existing files** - `app/pages/about.vue` is a deliberately well-commented kitchen-sink of frontend patterns. Steal from it.
+- **syn** - when all else fails, ask them. They're friendly. They said so themself at the bottom of the README.
 
 ---
 
@@ -368,4 +386,8 @@ That's the lot. Make pages, build components, mix DaisyUI with Tailwind utilitie
 
 If something in this document is wrong, please fix it. If something is missing, please add it. Onboarding docs that rot are worse than no onboarding docs at all, and you, dear new frontend person, are the most qualified person in the building to spot what was missing.
 
-Now go build something nice. And **affirm** your work. (Sorry.)
+Now go build something nice.
+
+And here's a cat to reward you for reading all the way through this bullshit.
+
+![Catputer](catputer.jpg)
