@@ -364,8 +364,13 @@ I truly do not care if you don't want to do this.
 5. **CSS lives in five lines.** Don't go hunting for `tailwind.config.js` - it isn't there. Tailwind v4 configures via CSS. The whole stylesheet entry is `app/assets/css/tailwind.css`.
 6. **Catppuccin Mocha is the only theme.** DaisyUI's defaults are explicitly disabled. Change that if you want to.
 7. **American English** in user-facing copy. "Color", not "colour". "Organization", not "organisation". It makes me very happy to be working with someone else who feels the pain about that.
-8. **No React.** I cannot stress this enough. If you find yourself wanting React, take a walk.
-9. The others are **not fans of AI**. Reasonable enough position; not mine. Still, it's the position which applies to this project because I'm outvoted (and fine with that). We don't integrate AI into PR review or anything like that. If you want to run it client-side, go for it. The `AGENTS.md` is the sole concession to AI in the code or tooling.
+8. **No React.** I cannot stress this enough. If you find yourself wanting React, touch grass.
+9. The others are **not fans of AI**.
+   1. Reasonable enough position; not mine.
+   2. Still, it's the position which applies to this project because I'm outvoted (and fine with that).
+   3. We don't integrate AI into PR review or anything like that.
+   4. If you want to run it client-side, go for it.
+   5. The `AGENTS.md` is the sole concession to AI in the code or tooling.
 
 ---
 
