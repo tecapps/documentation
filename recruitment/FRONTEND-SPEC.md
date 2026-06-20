@@ -2,7 +2,7 @@
 
 ## Brief
 
-We're hiring a front end developer to build and maintain **Affirm**, a modern web app running on Cloudflare's edge platform. You'll work across the UI — from page layouts to reusable components — in a small, close-knit team where the front end and backend sit side by side.
+We're hiring a front end developer to build and maintain **Affirm**, a modern web app running on Cloudflare's edge platform. You'll work across the UI - from page layouts to reusable components - in a small, close-knit team where the front end and backend sit side by side.
 
 ### What you'll do
 
