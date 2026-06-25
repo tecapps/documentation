@@ -4,6 +4,10 @@
 
 We're hiring a front end developer to build and maintain **Affirm**, a modern web app running on Cloudflare's edge platform. You'll work across the UI - from page layouts to reusable components - in a small, close-knit team where the front end and backend sit side by side.
 
+### Who we are
+
+Trans Equity Coalition is a 501(c)(3) nonprofit New Jersey state-wide organization led exclusively by transgender, nonbinary and gender nonconforming people. You don't need to be New Jersey based (or, indeed, even US-based - one of our colleagues works out of the UK) to apply.
+
 ### What you'll do
 
 Build responsive, accessible UI features in Vue and Nuxt, turn designs into clean themed interfaces, wire the front end up to our data layer, and ship through an automated Cloudflare pipeline. You'll write tests, keep the codebase tidy and type-safe, and take features from idea to production.
@@ -44,3 +48,11 @@ In an ideal world, you'll own the frontend and make architectural decisions in c
 This isn't a position where you're a grey-faced converter of caffeine to code. We're all a bit of a mess, and we're expecting you to be a bit of a mess too. We value **total honesty** over **total compliance**.
 
 We're here to make a thing and have a good time doing it. We're not here to work you to death through unadjustable expectations. You need to be good at what you do, but we're here to be told how we support you, not to tell you how to support us.
+
+### Remuneration
+
+This is a paid position, but we're not going to be able to match business numbers. Get involved with us because you want to make a difference - _that_ we can promise - with the payment just a bonus, rather than making this your day job.
+
+### Applying
+
+Sound good? Fantastic. Drop an email to [contact@transequitycoalition.org](mailto:contact@transequitycoalition.org), mention that this is about the frontend position for Affirm, and we can take it from there.
