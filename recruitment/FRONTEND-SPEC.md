@@ -1,5 +1,8 @@
 # Front End Developer
 
+> [!ALERT]
+> If this file is up with the contact details at the end, we're still looking. I'll modify it to remove the contact info as soon as the place gets filled.
+
 ## Brief
 
 We're hiring a front end developer to build and maintain **Affirm**, a modern web app running on Cloudflare's edge platform. You'll work across the UI - from page layouts to reusable components - in a small, close-knit team where the front end and backend sit side by side.
