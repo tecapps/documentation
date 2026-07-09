@@ -1,6 +1,6 @@
 # Front End Developer
 
-> [!ALERT]
+> [!TIP]
 > If this file is up with the contact details at the end, we're still looking. I'll modify it to remove the contact info as soon as the place gets filled.
 
 ## Brief
